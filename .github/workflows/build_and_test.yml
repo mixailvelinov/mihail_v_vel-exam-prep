@@ -1,0 +1,37 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Build and Test App
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - name: Show soft-uni username
+      run: echo "Softuni username - mihail_v_vel"
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Instal Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Npm install
+      run: npm ci
+    - name: Build app
+      run: npm run build --if-present
+    - name: Run unit tests
+      run: npm test:unit
+    - name: Run integration tests
+    - run: npm test:ui
