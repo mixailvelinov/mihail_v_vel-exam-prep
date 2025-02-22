@@ -20,20 +20,30 @@ jobs:
     steps:
     - name: Show soft-uni username
       run: echo "Softuni username - mihail_v_vel"
+      
     - name: Checkout repository
       uses: actions/checkout@v4
+      
     - name: Instal Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        
     - name: Npm install
       run: npm ci
+
+    - name: Install Playwright
+      run: npx playwright install
+      
     - name: Build app
       run: npm run build --if-present
+      
     - name: Start app
       run: npm run start &
+      
     - name: Run unit tests
       run: npm run test:unit
-    - name: Run integration tests
+
+    - name: Run integration test
       run: npm run test:ui
