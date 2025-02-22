@@ -34,4 +34,4 @@ jobs:
     - name: Run unit tests
       run: npm test:unit
     - name: Run integration tests
-    - run: npm test:ui
+      run: npm test:ui
